@@ -16,7 +16,7 @@ public class HotelView {
     DefaultTableModel tableModel;
     JTable table;
     JScrollPane scroll;
-    public JComboBox list;
+    public JComboBox comboBoxList;
     HotelController controller;
 
     public HotelView(HotelController controller) throws SQLException{
@@ -63,38 +63,88 @@ public class HotelView {
         frame.add(displayBtn);
 
         tableModel = new DefaultTableModel();
-        String col[] = {"Name", "Address", "Star Rating"};
+        String col[] = {"Id","Name", "Address", "Star Rating"};
         tableModel.setColumnIdentifiers(col);
 
         table = new JTable();
         table.setModel(tableModel);
         scroll = new JScrollPane(table);
-        scroll.setBounds(350,10,350,300);
+        scroll.setBounds(350,10,360,300);
         frame.add(scroll);
 
-        list = new JComboBox();
-        list.setBounds(10,230,100,20);
-        frame.add(list);
+        comboBoxList = new JComboBox();
+        comboBoxList.setBounds(10,230,100,20);
+        frame.add(comboBoxList);
 
         this.controller = controller;
         loadId();
         loadData();
 
         frame.setVisible(true);
+
+        //Add action listeners to the buttons
+        saveBtn.addActionListener(event -> saveHotel());
+        editBtn.addActionListener(event -> editHotel());
     }
 
-    public void loadId(){
-        list.removeAllItems();
-        list.addItem("Select ID");
+    private void loadId(){
+        comboBoxList.removeAllItems();
+        comboBoxList.addItem("Select ID");
         List<Long> hotelsIdList = controller.getHotelsIdList();
-        hotelsIdList.stream().forEach(id -> list.addItem(Long.toString(id)));
+        hotelsIdList.stream().forEach(id -> comboBoxList.addItem(Long.toString(id)));
     }
 
-    public void loadData(){
+    private void loadData(){
         tableModel.setRowCount(0);
         List<Hotel> allHotels = controller.getAllHotelsList();
         allHotels.stream().forEach(hotel -> {
-            tableModel.addRow(new Object[] {hotel.getName(), hotel.getAddress(), hotel.getStarRating()});
+            tableModel.addRow(new Object[] {hotel.getId(),hotel.getName(), hotel.getAddress(), hotel.getStarRating()});
         });
+    }
+
+    private void showResultMesage(int resultOfExecution, String operation){
+        if(resultOfExecution == 1){
+            JOptionPane.showMessageDialog(null, "Row " + operation + " successfully.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No Row " + operation +".");
+        }
+    }
+
+    private void saveHotel() {
+        String name = nameTextField.getText();
+        String address = addressTextField.getText();
+        Integer starRating = Integer.valueOf(starRatingTextField.getText());
+
+        Hotel hotelToSave = new Hotel();
+        hotelToSave.setName(name);
+        hotelToSave.setAddress(address);
+        hotelToSave.setStarRating(starRating);
+
+        try{
+            showResultMesage(controller.createHotel(hotelToSave), "inserted");
+            loadData();
+            loadId();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void editHotel() {
+        Long hotelId = Long.parseLong((String)comboBoxList.getSelectedItem());
+        String name = nameTextField.getText();
+        String address = addressTextField.getText();
+        Integer starRating = Integer.valueOf(starRatingTextField.getText());
+
+        Hotel hotelToUpdate = controller.getHotelById(hotelId).orElse(new Hotel());
+        hotelToUpdate.setName(name);
+        hotelToUpdate.setAddress(address);
+        hotelToUpdate.setStarRating(starRating);
+        try{
+            showResultMesage(controller.updateHotel(hotelToUpdate), "updated");
+            loadData();
+            loadId();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

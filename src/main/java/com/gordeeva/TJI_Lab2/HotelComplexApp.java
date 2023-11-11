@@ -9,9 +9,6 @@ import java.sql.SQLException;
 
 public class HotelComplexApp {
     public static void main(String[] args) throws SQLException {
-//        HotelController controller = new HotelController(new HotelService());
-//        HotelComplexGUI hotelComplexGUI = new HotelComplexGUI(controller);
-//        hotelComplexGUI.createGUI();
         new HotelView(new HotelController(new HotelService()));
     }
 }

@@ -23,17 +23,16 @@ public class HotelDaoImpl implements HotelDao {
     private final String SQL_DELETE_HOTEL = "DELETE FROM hotels WHERE hotel_id=?";
 
     @Override
-    public Long createHotel(Hotel hotel) {
-        Long hotelId = 0L;
+    public int createHotel(Hotel hotel) {
+        int resultOfExecution = 0;
         try(PreparedStatement prepStatement = connection.prepareStatement(SQL_CREATE_HOTEL, Statement.RETURN_GENERATED_KEYS)){
             prepStatement.setString(1, hotel.getName());
             prepStatement.setString(2, hotel.getAddress());
             prepStatement.setInt(3, hotel.getStarRating());
-            prepStatement.executeUpdate();
+            resultOfExecution = prepStatement.executeUpdate();
             try (ResultSet generatedKeys = prepStatement.getGeneratedKeys()){
                 if (generatedKeys.next()){
-                    hotelId = generatedKeys.getLong(1);
-                    hotel.setId(hotelId);
+                    hotel.setId(generatedKeys.getLong(1));
                 }
 
             }
@@ -41,7 +40,7 @@ public class HotelDaoImpl implements HotelDao {
             ex.printStackTrace();
 
         }
-        return hotelId;
+        return resultOfExecution;
     }
 
     @Override
@@ -98,15 +97,18 @@ public class HotelDaoImpl implements HotelDao {
     }
 
     @Override
-    public void updateHotel(Hotel hotel) {
+    public int updateHotel(Hotel hotel) {
+        int resultOfExecution = 0;
         try(PreparedStatement prepStatement = connection.prepareStatement(SQL_UPDATE_HOTEL)){
             prepStatement.setString(1, hotel.getName());
             prepStatement.setString(2, hotel.getAddress());
             prepStatement.setInt(3, hotel.getStarRating());
             prepStatement.setLong(4, hotel.getId());
+            resultOfExecution = prepStatement.executeUpdate();
         }catch (SQLException ex){
             ex.printStackTrace();
         }
+        return resultOfExecution;
     }
 
     @Override

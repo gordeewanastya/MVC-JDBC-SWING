@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface HotelDao {
-     Long createHotel(Hotel hotel);
+     int createHotel(Hotel hotel);
      Optional<Hotel> getHotelById(Long hotelId);
      List<Hotel> getAllHotels();
      List<Long> getHotelsIdList();
-     void updateHotel(Hotel hotel);
+     int updateHotel(Hotel hotel);
      void deleteHotel(Long hotelId);
 }
 

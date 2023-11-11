@@ -13,7 +13,7 @@ import java.util.Optional;
 public class HotelService {
     private final HotelDaoImpl hotelDaoImpl = new HotelDaoImpl();
 
-    public Long createHotel(Hotel hotel){
+    public int createHotel(Hotel hotel){
         return hotelDaoImpl.createHotel(hotel);
     }
 
@@ -27,8 +27,8 @@ public class HotelService {
 
     public List<Long> getHotelsIdList(){ return hotelDaoImpl.getHotelsIdList();}
 
-    public void updateHotel(Hotel hotel){
-        hotelDaoImpl.updateHotel(hotel);
+    public int updateHotel(Hotel hotel){
+        return hotelDaoImpl.updateHotel(hotel);
     }
 
     public void deleteHotel(Long hotelId){
