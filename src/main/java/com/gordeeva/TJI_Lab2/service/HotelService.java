@@ -25,6 +25,8 @@ public class HotelService {
         return hotelDaoImpl.getAllHotels();
     }
 
+    public List<Long> getHotelsIdList(){ return hotelDaoImpl.getHotelsIdList();}
+
     public void updateHotel(Hotel hotel){
         hotelDaoImpl.updateHotel(hotel);
     }

@@ -41,7 +41,7 @@ public class HotelDialogMenu {
                 hotel.setName(name);
                 hotel.setAddress(address);
                 hotel.setStarRating(Integer.valueOf(rating));
-                Long hotelId = hotelController.createHotel(hotel);
+//                Long hotelId = hotelController.createHotel(hotel);
 
 //                if(hotelId != 0L){
 //                    panel.removeAll(); // Очистить панель от предыдущего содержимого

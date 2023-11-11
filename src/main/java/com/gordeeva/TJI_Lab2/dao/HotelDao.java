@@ -9,6 +9,7 @@ public interface HotelDao {
      Long createHotel(Hotel hotel);
      Optional<Hotel> getHotelById(Long hotelId);
      List<Hotel> getAllHotels();
+     List<Long> getHotelsIdList();
      void updateHotel(Hotel hotel);
      void deleteHotel(Long hotelId);
 }

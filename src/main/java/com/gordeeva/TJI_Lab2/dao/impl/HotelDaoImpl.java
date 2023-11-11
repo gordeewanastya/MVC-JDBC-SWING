@@ -16,6 +16,7 @@ import java.util.Optional;
 public class HotelDaoImpl implements HotelDao {
     private final Connection connection = ConfigurationDBConnection.getConnection();
     private final String SQL_CREATE_HOTEL = "INSERT INTO hotels (name,address,star_rating) VALUES (?,?,?)";
+    private final String SQL_GET_HOTEL_ID_LIST = "SELECT hotel_id FROM hotels";
     private final String SQL_GET_HOTEL_BY_ID = "SELECT * FROM hotels WHERE hotel_id=?";
     private final String SQL_GET_ALL_HOTELS = "SELECT * FROM hotels";
     private final String SQL_UPDATE_HOTEL = "UPDATE hotels SET name=?, address=?, star_rating=? WHERE hotel_id=?";
@@ -60,6 +61,21 @@ public class HotelDaoImpl implements HotelDao {
             ex.printStackTrace();
         }
         return Optional.of(hotel);
+    }
+
+    @Override
+    public List<Long> getHotelsIdList() {
+        List<Long> hotelIdList = new ArrayList<>();
+        try(PreparedStatement prepStatement = connection.prepareStatement(SQL_GET_HOTEL_ID_LIST)){
+            try (ResultSet rs = prepStatement.executeQuery()){
+                while (rs.next()){
+                    hotelIdList.add(rs.getLong("hotel_id"));
+                }
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return hotelIdList;
     }
 
     @Override
