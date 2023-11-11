@@ -31,7 +31,7 @@ public class HotelService {
         return hotelDaoImpl.updateHotel(hotel);
     }
 
-    public void deleteHotel(Long hotelId){
-        hotelDaoImpl.deleteHotel(hotelId);
+    public int deleteHotel(Long hotelId){
+        return hotelDaoImpl.deleteHotel(hotelId);
     }
 }

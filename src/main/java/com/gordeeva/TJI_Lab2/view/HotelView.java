@@ -5,8 +5,10 @@ import com.gordeeva.TJI_Lab2.model.Hotel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ItemEvent;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Stack;
 
 public class HotelView {
     JFrame frame;
@@ -85,6 +87,10 @@ public class HotelView {
         //Add action listeners to the buttons
         saveBtn.addActionListener(event -> saveHotel());
         editBtn.addActionListener(event -> editHotel());
+        deleteBtn.addActionListener(event -> deleteHotel());
+        displayBtn.addActionListener(event -> displayHotel());
+
+        comboBoxList.addItemListener(itemEvent -> comboBoxState(itemEvent));
     }
 
     private void loadId(){
@@ -147,4 +153,44 @@ public class HotelView {
             ex.printStackTrace();
         }
     }
+
+    private void deleteHotel() {
+        Long hotelId = Long.parseLong((String)comboBoxList.getSelectedItem());
+        try{
+            showResultMesage(controller.deleteHotel(hotelId), "deleted");
+            loadData();
+            loadId();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void displayHotel() {
+        loadData();
+        loadId();
+    }
+
+    private void comboBoxState(ItemEvent itemEvent) {
+        if(itemEvent.getStateChange()==ItemEvent.SELECTED){
+            String selectedItem = comboBoxList.getSelectedItem().toString();
+            if(selectedItem.equals("Select ID")){
+                try{
+                    loadData();
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }else{
+                Long hotelId = Long.parseLong((String)comboBoxList.getSelectedItem());
+                Hotel hotel;
+                try{
+                    hotel = controller.getHotelById(hotelId).orElse(new Hotel());
+                    tableModel.setRowCount(0);
+                    tableModel.addRow(new Object[]{hotel.getId(),hotel.getName(), hotel.getAddress(), hotel.getStarRating()});
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

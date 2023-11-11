@@ -30,4 +30,8 @@ public class HotelController {
     public int updateHotel(Hotel hotel){
         return hotelService.updateHotel(hotel);
     }
+
+    public int deleteHotel(Long hotelId){
+        return hotelService.deleteHotel(hotelId);
+    }
 }

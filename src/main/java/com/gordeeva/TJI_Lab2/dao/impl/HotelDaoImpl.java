@@ -112,12 +112,14 @@ public class HotelDaoImpl implements HotelDao {
     }
 
     @Override
-    public void deleteHotel(Long hotelId) {
+    public int deleteHotel(Long hotelId) {
+        int resultOfExecution = 0;
         try(PreparedStatement prepStatement = connection.prepareStatement(SQL_DELETE_HOTEL)){
             prepStatement.setLong(1, hotelId);
-            prepStatement.executeUpdate();
+            resultOfExecution = prepStatement.executeUpdate();
         }catch (SQLException ex){
             ex.printStackTrace();
         }
+        return resultOfExecution;
     }
 }
