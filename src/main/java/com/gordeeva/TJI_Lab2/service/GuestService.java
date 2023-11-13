@@ -1,12 +1,8 @@
 package com.gordeeva.TJI_Lab2.service;
 
 import com.gordeeva.TJI_Lab2.dao.impl.GuestDaoImpl;
-import com.gordeeva.TJI_Lab2.dao.impl.HotelDaoImpl;
 import com.gordeeva.TJI_Lab2.model.Guest;
-import com.gordeeva.TJI_Lab2.model.Hotel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

@@ -10,8 +10,9 @@ public class HotelAppView {
     JTabbedPane tabbedPane;
     HotelPanel hotelPanel;
     GuestPanel guestPanel;
+    RoomPanel roomPanel;
 
-    public HotelAppView(HotelPanel hotelPanel,GuestPanel guestPanel) throws SQLException {
+    public HotelAppView(HotelPanel hotelPanel,GuestPanel guestPanel,RoomPanel roomPanel) throws SQLException {
         frame = new JFrame("Hotel Complex Application");
         frame.setSize(800,700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +25,9 @@ public class HotelAppView {
 
         this.guestPanel = guestPanel;
         tabbedPane.addTab("Guests", guestPanel);
+
+        this.roomPanel = roomPanel;
+        tabbedPane.addTab("Rooms", roomPanel);
 
         frame.add(tabbedPane, BorderLayout.CENTER);
         frame.setVisible(true);
