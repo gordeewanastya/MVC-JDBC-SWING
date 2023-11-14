@@ -32,4 +32,6 @@ public class RoomService {
     public int deleteRoom(Long roomId){
         return roomDaoImpl.deleteRoom(roomId);
     }
+
+    public List<Room> getBusinessRooms() {return roomDaoImpl.getBusinessRooms();}
 }

@@ -12,4 +12,5 @@ public interface RoomDao {
     List<Long> getRoomsIdList();
     int updateRoom(Room room);
     int deleteRoom(Long roomId);
+    List<Room> getBusinessRooms();
 }

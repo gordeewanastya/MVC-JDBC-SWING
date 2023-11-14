@@ -30,4 +30,5 @@ public class RoomController {
     }
 
     public int deleteRoom(Long roomId){ return roomService.deleteRoom(roomId); }
+    public List<Room> getBusinessRooms() {return roomService.getBusinessRooms();}
 }

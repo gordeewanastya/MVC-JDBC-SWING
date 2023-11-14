@@ -33,4 +33,6 @@ public class HotelService {
     public int deleteHotel(Long hotelId){
         return hotelDaoImpl.deleteHotel(hotelId);
     }
+
+    public List<Hotel> getHotelsWithHighRating() {return hotelDaoImpl.getHotelsWithHighRating();}
 }

@@ -22,6 +22,7 @@ public class RoomDaoImpl implements RoomDao {
     private final String SQL_GET_ALL_ROOMS = "SELECT * FROM rooms";
     private final String SQL_UPDATE_ROOM = "UPDATE rooms SET hotel_id=?,room_number=?,room_type=?,rate=? WHERE room_id=?";
     private final String SQL_DELETE_ROOM = "DELETE FROM rooms WHERE room_id=?";
+    private final String SQL_GET_BUSINESS_ROOMS = "SELECT * FROM rooms WHERE room_type='Business'";
 
     @Override
     public int addRoom(Room room) {
@@ -126,5 +127,25 @@ public class RoomDaoImpl implements RoomDao {
             ex.printStackTrace();
         }
         return resultOfExecution;
+    }
+
+    @Override
+    public List<Room> getBusinessRooms() {
+        List<Room> allBusinessRooms = new ArrayList<>();
+        try(PreparedStatement prepStatement = connection.prepareStatement(SQL_GET_BUSINESS_ROOMS)){
+            ResultSet rs = prepStatement.executeQuery();
+            while (rs.next()) {
+                Room room = new Room();
+                room.setId(rs.getLong("room_id"));
+                room.setHotelId(rs.getLong("hotel_id"));
+                room.setRoomNumber(rs.getString("room_number"));
+                room.setRoomType(rs.getString("room_type"));
+                room.setRate(rs.getFloat("rate"));
+                allBusinessRooms.add(room);
+            }
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return allBusinessRooms;
     }
 }

@@ -34,4 +34,5 @@ public class HotelController {
     public int deleteHotel(Long hotelId){
         return hotelService.deleteHotel(hotelId);
     }
+    public List<Hotel> getHotelsWithHighRating(){return hotelService.getHotelsWithHighRating();}
 }

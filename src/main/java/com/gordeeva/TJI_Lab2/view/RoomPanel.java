@@ -1,7 +1,6 @@
 package com.gordeeva.TJI_Lab2.view;
 
 import com.gordeeva.TJI_Lab2.controller.RoomController;
-import com.gordeeva.TJI_Lab2.model.Guest;
 import com.gordeeva.TJI_Lab2.model.Room;
 
 import javax.swing.*;
@@ -13,7 +12,7 @@ import java.util.List;
 public class RoomPanel extends JPanel{
     JLabel hotelIdLabel, roomNumberLabel, roomTypeLabel, rateLabel;
     JTextField hotelIdTextField, roomNumberTextField, roomTypeTextField, rateTextField;
-    JButton saveBtn,editBtn,deleteBtn,displayBtn;
+    JButton saveBtn,editBtn,deleteBtn,displayBtn, businessRoomsBtn;
     DefaultTableModel tableModel;
     JTable table;
     JScrollPane scroll;
@@ -65,6 +64,10 @@ public class RoomPanel extends JPanel{
         displayBtn.setBounds(120,170, 100, 20);
         this.add(displayBtn);
 
+        businessRoomsBtn = new JButton("Business Type");
+        businessRoomsBtn.setBounds(170, 200, 110, 20);
+        this.add(businessRoomsBtn);
+
         tableModel = new DefaultTableModel();
         String col[] = {"RoomId","HotelId","RoomNumber", "RoomType", "Rate"};
         tableModel.setColumnIdentifiers(col);
@@ -90,6 +93,7 @@ public class RoomPanel extends JPanel{
         editBtn.addActionListener(event -> editRoom());
         deleteBtn.addActionListener(event -> deleteRoom());
         displayBtn.addActionListener(event -> displayRoom());
+        businessRoomsBtn.addActionListener(event -> displayBusinessRooms());
 
         comboBoxList.addItemListener(itemEvent -> comboBoxState(itemEvent));
     }
@@ -209,4 +213,19 @@ public class RoomPanel extends JPanel{
             }
         }
     }
+
+    private void displayBusinessRooms() {
+        tableModel.setRowCount(0);
+        List<Room> allBusinessRooms = controller.getBusinessRooms();
+        allBusinessRooms.stream().forEach(room -> {
+            tableModel.addRow(new Object[] {
+                    room.getId(),
+                    room.getHotelId(),
+                    room.getRoomNumber(),
+                    room.getRoomType(),
+                    room.getRate()
+            });
+        });
+    }
+
 }

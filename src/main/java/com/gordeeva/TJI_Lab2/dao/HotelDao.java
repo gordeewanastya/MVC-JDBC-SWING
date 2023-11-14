@@ -12,5 +12,6 @@ public interface HotelDao {
      List<Long> getHotelsIdList();
      int updateHotel(Hotel hotel);
      int deleteHotel(Long hotelId);
+     List<Hotel> getHotelsWithHighRating();
 }
 

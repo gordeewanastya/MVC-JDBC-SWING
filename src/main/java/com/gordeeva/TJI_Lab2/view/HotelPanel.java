@@ -13,7 +13,7 @@ import java.util.List;
 public class HotelPanel extends JPanel {
     JLabel nameLabel, addressLabel,starRatingLabel;
     JTextField nameTextField,addressTextField, starRatingTextField;
-    JButton saveBtn,editBtn,deleteBtn,displayBtn;
+    JButton saveBtn,editBtn,deleteBtn,displayBtn, highRatingHotelsBtn;
     DefaultTableModel tableModel;
     JTable table;
     JScrollPane scroll;
@@ -60,6 +60,10 @@ public class HotelPanel extends JPanel {
         displayBtn.setBounds(120,170, 100, 20);
         this.add(displayBtn);
 
+        highRatingHotelsBtn = new JButton("High Rating Hotels");
+        highRatingHotelsBtn.setBounds(140, 200, 120, 20);
+        this.add(highRatingHotelsBtn);
+
         tableModel = new DefaultTableModel();
         String col[] = {"Id","Name", "Address", "Star Rating"};
         tableModel.setColumnIdentifiers(col);
@@ -85,6 +89,8 @@ public class HotelPanel extends JPanel {
         editBtn.addActionListener(event -> editHotel());
         deleteBtn.addActionListener(event -> deleteHotel());
         displayBtn.addActionListener(event -> displayHotel());
+        highRatingHotelsBtn.addActionListener(event -> displayHighRatingHotel());
+
 
         comboBoxList.addItemListener(itemEvent -> comboBoxState(itemEvent));
     }
@@ -187,6 +193,15 @@ public class HotelPanel extends JPanel {
                 }
             }
         }
+    }
+
+
+    private void displayHighRatingHotel() {
+        tableModel.setRowCount(0);
+        List<Hotel> hotelsHighRating = controller.getHotelsWithHighRating();
+        hotelsHighRating.stream().forEach(hotel -> {
+            tableModel.addRow(new Object[] {hotel.getId(),hotel.getName(), hotel.getAddress(), hotel.getStarRating()});
+        });
     }
 
 }
